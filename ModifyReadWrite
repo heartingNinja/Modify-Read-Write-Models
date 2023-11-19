@@ -1,0 +1,98 @@
+using System.IO;
+using UnityEditor;
+using UnityEngine;
+
+public class ModifyReadWrite : MonoBehaviour
+{
+    [MenuItem("Assets/Modify Read/Write To False")]
+    static void ModifySelectedAssetsToFalse()
+    {
+        // Get all currently selected objects in the Unity Editor
+        Object[] selectedObjects = Selection.objects;
+
+        foreach (Object selectedObject in selectedObjects)
+        {
+            if (selectedObject != null)
+            {
+                // Get the path of the selected asset
+                string assetPath = AssetDatabase.GetAssetPath(selectedObject);
+
+                // Read the content of the asset as text
+                string[] lines = File.ReadAllLines(assetPath);
+
+                bool modified = false;
+
+                // Modify the content as needed
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    if (lines[i].Contains("m_IsReadable: 1"))
+                    {
+                        // Modify the value here (change 1 to 0)
+                        lines[i] = lines[i].Replace("m_IsReadable: 1", "m_IsReadable: 0");
+                        modified = true;
+                    }
+                    else if (lines[i].Contains("m_IsReadable: 0"))
+                    {
+                        // If already "m_IsReadable: 0", skip this line
+                        continue;
+                    }
+                }
+
+                if (modified)
+                {
+                    // Write the modified content back to the asset
+                    File.WriteAllLines(assetPath, lines);
+
+                    // Refresh the asset database to reflect the changes in the Unity Editor
+                    AssetDatabase.Refresh();
+                }
+            }
+        }
+    }
+
+    [MenuItem("Assets/Modify Read/Write To True")]
+    static void ModifySelectedAssetsToTrue()
+    {
+        // Get all currently selected objects in the Unity Editor
+        Object[] selectedObjects = Selection.objects;
+
+        foreach (Object selectedObject in selectedObjects)
+        {
+            if (selectedObject != null)
+            {
+                // Get the path of the selected asset
+                string assetPath = AssetDatabase.GetAssetPath(selectedObject);
+
+                // Read the content of the asset as text
+                string[] lines = File.ReadAllLines(assetPath);
+
+                bool modified = false;
+
+                // Modify the content as needed
+                for (int i = 0; i < lines.Length; i++)
+                {
+                    if (lines[i].Contains("m_IsReadable: 0"))
+                    {
+                        // Modify the value here (change 0 to 1)
+                        lines[i] = lines[i].Replace("m_IsReadable: 0", "m_IsReadable: 1");
+                        modified = true;
+                    }
+                    else if (lines[i].Contains("m_IsReadable: 1"))
+                    {
+                        // If already "m_IsReadable: 1", skip this line
+                        continue;
+                    }
+                }
+
+                if (modified)
+                {
+                    // Write the modified content back to the asset
+                    File.WriteAllLines(assetPath, lines);
+
+                    // Refresh the asset database to reflect the changes in the Unity Editor
+                    AssetDatabase.Refresh();
+                }
+            }
+        }
+    }
+}
