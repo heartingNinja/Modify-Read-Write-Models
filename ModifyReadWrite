@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ModifyReadWrite : MonoBehaviour
 {
+#if UNITY_EDITOR
     [MenuItem("Assets/Modify Read/Write To False")]
     static void ModifySelectedAssetsToFalse()
     {
@@ -95,4 +96,5 @@ public class ModifyReadWrite : MonoBehaviour
             }
         }
     }
+#endif
 }
