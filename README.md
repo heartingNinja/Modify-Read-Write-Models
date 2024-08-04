@@ -3,11 +3,8 @@
 This script provides a menu item in the Unity Editor to toggle the 'm_IsReadable' property in selected assets.
 
 Some meshes could not be edited so I made a version that works on every mesh. Link below.
-
 https://github.com/heartingNinja/MeshReadWriteToggle
-
 Used this doc
-
 https://docs.unity3d.com/ScriptReference/Mesh.UploadMeshData.html
 
 ## How to Use
